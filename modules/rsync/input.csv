@@ -1,0 +1,11 @@
+AC1,10.181.254.114,ttec-dev
+AC1,10.220.1.220,ncs-datacom-prod
+MB1,10.220.1.221,ncs-datacom-prod
+AC1,10.255.251.40,varmour-prod
+MB1,10.255.251.50,varmour-prod
+AC1,10.255.253.10,wipro-prod
+MB1,10.255.253.20,wipro-prod
+AC1,10.255.249.10,varmour-appsec-prod
+MB1,10.255.249.20,varmour-appsec-prod
+AC1,10.255.248.10,usesi-prod
+MB1,10.255.248.20,usesi-prod

@@ -1,0 +1,44 @@
+curl https://ip-ranges.amazonaws.com/ip-ranges.json | jq -r '.prefixes[] | select(.region=="us-west-1") | select(.service=="S3") | .ip_prefix'
+
+
+
+module "vanta-auditor" {
+  source        = "../../modules/vanta-auditor"
+  common_tags   = local.common_tags
+}
+
+
+output "Vanta_Role_Arn" {
+  value = module.vanta-auditor.vanta_role_arn
+}
+
+# module "va_iam_varmour-mb-s3-vpc-flow-logs" {
+#   source        = "../../modules/va_iam_varmour-mb-s3-vpc-flow-logs"
+#   common_tags   = local.common_tags
+# }
+# output "vA_MB_s3_role_arn" {
+#   value = module.va_iam_varmour-mb-s3-vpc-flow-logs.vA_MB_s3_role_arn
+# }
+
+module "va_iam_messagebusrole" {
+  source        = "../../modules/va_iam_messagebusrole"
+  common_tags   = local.common_tags
+}
+output "vA_MB_role_arn" {
+  value = module.va_iam_messagebusrole.vA_MB_role_arn
+}
+
+  iam_instance_profile           = module.va_iam_messagebusrole.vA_MB_role_name
+
+
+
+
+  
+SRE-620: Vanta IAM role for SOC2 compliance
+
+Vanta_Role_Arn = "arn:aws:iam::226442185253:role/vanta-auditor" - varmour
+Vanta_Role_Arn = "arn:aws:iam::504141003854:role/vanta-auditor" - NCS datacom
+Vanta_Role_Arn = "arn:aws:iam::054475548886:role/vanta-auditor" - Wipro
+Vanta_Role_Arn = "arn:aws:iam::434360104464:role/vanta-auditor" - TTEC
+Vanta_Role_Arn = "arn:aws:iam::535998799112:role/vanta-auditor" - RCloud Management
+Vanta_Role_Arn = "arn:aws:iam::974084754407:role/vanta-auditor" - Sandbox

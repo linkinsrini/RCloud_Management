@@ -1,0 +1,99 @@
+sudo rsync --delete -azvv -e "ssh -i ec2.pem" ubuntu@12.34.55.66:/var/www/example.com/ /home/workspace/example.com/backup
+
+
+app,sourceip,keyfile,sourcefile,destfile
+AC,10.255.252.29,locaweb-dev,/var/log/auth.log,/s3logdrive/auditlogs/auth/
+
+
+
+
+Join Patreon ➔
+#!/bin/bash
+# Purpose: Read Comma Separated CSV File
+# ------------------------------------------
+INPUT=data.csv
+OLDIFS=$IFS
+IFS=','
+[ ! -f $INPUT ] && { echo "$INPUT file not found"; exit 99; }
+while read app sourceip keyfile sourcefile destfile
+do
+	echo "sourceip : $sourceip"
+	echo "keyfile : $keyfile"
+	echo "sourcefile : $sourcefile"
+	echo "destfile : $destfile"
+	echo "app : $app"
+    echo "rsync -auv -e "ssh -i /home/skrishnasamy/$keyfile" varmour@$sourceip:$sourcefile/ $destfile/$keyfile_$app.log"
+done < $INPUT
+IFS=$OLDIFS
+
+
+Join Patreon ➔
+#!/bin/bash
+# Purpose: Read Comma Separated CSV File
+# ------------------------------------------
+INPUT=input.csv
+OLDIFS=$IFS
+IFS=','
+[ ! -f $INPUT ] && { echo "$INPUT file not found"; exit 99; }
+while read app sourceip keyfile
+do
+	echo "rsync -auv -e "ssh -i /home/skrishnasamy/$keyfile" varmour@$sourceip:/var/log/audit/audit.log* /s3logdrive/auditlogs/audit/$keyfile-$app/"
+	echo "rsync -auv -e "ssh -i /home/skrishnasamy/$keyfile" varmour@$sourceip:/var/log/auth.log* /s3logdrive/auditlogs/auth/$keyfile-$app/"
+	echo "rsync -auv -e "ssh -i /home/skrishnasamy/$keyfile" varmour@$sourceip:/var/log/syslog* /s3logdrive/auditlogs/syslog/$keyfile-$app/"
+	echo "rsync -auv -e "ssh -i /home/skrishnasamy/$keyfile" varmour@$sourceip:/var/log/sudo.log /s3logdrive/auditlogs/sudo/$keyfile-$app/"
+	echo "rsync -auv -e "ssh -i /home/skrishnasamy/$keyfile" varmour@$sourceip:/var/log/containers/*.log /s3logdrive/auditlogs/containers/$keyfile-$app/"
+done < $INPUT
+IFS=$OLDIFS
+
+
+#!/bin/bash
+# Purpose: Read Comma Separated CSV File
+# ------------------------------------------
+INPUT=input.csv
+OLDIFS=$IFS
+IFS=','
+[ ! -f $INPUT ] && { echo "$INPUT file not found"; exit 99; }
+while read app sourceip keyfile
+do
+	rsync -auv --verbose  --timeout=4 -e "ssh -i /home/skrishnasamy/$keyfile -o StrictHostKeyChecking=no" --rsync-path="sudo rsync" varmour@$sourceip:/var/log/audit/audit.log /s3logdrive/auditlogs/audit/$keyfile-$app/
+	rsync -auv --verbose  --timeout=4 -e "ssh -i /home/skrishnasamy/$keyfile -o StrictHostKeyChecking=no" --rsync-path="sudo rsync" varmour@$sourceip:/var/log/auth.log /s3logdrive/auditlogs/auth/$keyfile-$app/
+	rsync -auv --verbose  --timeout=4 -e "ssh -i /home/skrishnasamy/$keyfile -o StrictHostKeyChecking=no" --rsync-path="sudo rsync" varmour@$sourceip:/var/log/syslog /s3logdrive/auditlogs/syslog/$keyfile-$app/
+	rsync -auv --verbose  --timeout=4 -e "ssh -i /home/skrishnasamy/$keyfile -o StrictHostKeyChecking=no" --rsync-path="sudo rsync" varmour@$sourceip:/var/log/sudo.log /s3logdrive/auditlogs/sudo/$keyfile-$app/
+	rsync -auv --verbose  --timeout=4 -e "ssh -i /home/skrishnasamy/$keyfile -o StrictHostKeyChecking=no" --rsync-path="sudo rsync" varmour@$sourceip:/var/log/containers/*.log /s3logdrive/auditlogs/containers/$keyfile-$app/
+done < $INPUT
+IFS=$OLDIFS
+
+
+/var/log/audit/audit.log*
+/var/log/auth.log*
+/var/log/syslog*
+/var/log/sudo.log
+
+/var/log/containers/*.log
+
+
+
+
+fed-vitals  locaweb-dev  ncs-datacom-prod  rsync  ttec-dev  varmour-prod  wipro-prod
+
+
+AC1,10.181.254.114,ttec-dev
+AC1,10.220.1.220,ncs-datacom-prod
+MB1,10.220.1.221,ncs-datacom-prod
+AC1,10.255.251.40,varmour-prod
+MB1,10.255.251.50,varmour-prod
+AC1,10.255.253.10,wipro-prod
+MB1,10.255.253.20,wipro-prod
+
+
+
+
+
+Munish Gupta1:19 PM
+1. Image build process 
+2. OS upgrader
+3. K8s debug/troubleshooting
+4. Troubleshooting bundle/helm issues
+5. Repo re-factoring
+Munish Gupta1:22 PM
+66. Rcloud management
